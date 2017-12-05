@@ -81,7 +81,15 @@ subtitles_location="/path/to/Subtitles"
 # Blu-ray Discs, 30 DVDs and numerous other files with these settings and
 # they've never let me down.
 
-handbrake_options="--markers --large-file --encoder x264 --encopts vbv-maxrate=25000:vbv-bufsize=31250:ratetol=inf --crop 0:0:0:0 --strict-anamorphic"
+# NOTE: Change by marcus-grant
+# - '--large-file' option was removed from Handbrake since version 0.10,
+#   encoder now detects whether host is 64bit OS.
+#   - solution sourced from: http://bit.ly/2jdbRen
+# - '--strict-anamorphic' option changed to '--auto-anamorphic'
+#   - seems to work largely the same, the settings heuristics seem accurate
+#   - detailed on handbrake's repo http://bit.ly/2jcjZMw
+
+handbrake_options="--markers --encoder x264 --encopts vbv-maxrate=25000:vbv-bufsize=31250:ratetol=inf --crop 0:0:0:0 --auto-anamorphic"
 
 width="$(mediainfo --Inform='Video;%Width%' "$input")"
 height="$(mediainfo --Inform='Video;%Height%' "$input")"
